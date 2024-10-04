@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MaxWidthWrapper } from "./MaxWidthWrapper";
+import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
 
 export default function Footer() {
   return (

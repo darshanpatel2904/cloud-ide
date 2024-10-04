@@ -20,9 +20,7 @@ class DockerService {
         "/home/cloud-ide/code": {},
       },
       HostConfig: {
-        Binds: [
-          `/Users/darshan/Desktop/project/cloud-ide/playgrounds/${projectId}:/home/cloud-ide/code`,
-        ],
+        Binds: [`${process.env.PWD}/${projectId}:/home/cloud-ide/code`],
         PortBindings: {
           "5173/tcp": [{ HostPort: "0" }],
         },

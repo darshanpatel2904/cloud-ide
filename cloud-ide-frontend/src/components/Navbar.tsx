@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { MaxWidthWrapper } from "./MaxWidthWrapper";
+import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
 import { Code2 } from "lucide-react";
-import { Button, buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/AuthContext";
-import UserAvatar from "./UserAvtar";
+import UserAvatar from "@/components/UserAvtar";
 
 export default function Navbar() {
   const location = useLocation();

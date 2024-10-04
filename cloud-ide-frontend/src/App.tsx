@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import ProjectEntry from "./pages/ProjectEntry";
-import Playground from "./pages/Playground";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import AllProjects from "./pages/AllProjects";
-import ProtectedRoute from "./components/ProtectedRoute";
+import LandingPage from "@/pages/LandingPage";
+import ProjectEntry from "@/pages/ProjectEntry";
+import Playground from "@/pages/Playground";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import AllProjects from "@/pages/AllProjects";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function App() {
   return (

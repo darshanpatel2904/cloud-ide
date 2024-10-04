@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronRight, File, Folder } from "lucide-react";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { usePlaygroundContext } from "@/contexts/PlaygroundContext";
 import axiosInstance from "@/lib/Axios";
 

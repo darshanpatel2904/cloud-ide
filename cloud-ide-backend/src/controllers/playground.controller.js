@@ -33,21 +33,14 @@ const createPlayground = asyncHandler(async (req, res) => {
     description,
   });
 
-  fs.mkdir(
-    path.resolve(
-      "/Users/darshan/Desktop/project/cloud-ide/playgrounds",
-      `${createdCollaboration._id}`
-    ),
-    { recursive: true }
-  );
+  fs.mkdir(path.resolve(process.env.PWD, `${createdCollaboration._id}`), {
+    recursive: true,
+  });
 
   exec(
     "npm create vite@latest . -- --template react",
     {
-      cwd: path.resolve(
-        "/Users/darshan/Desktop/project/cloud-ide/playgrounds",
-        `${createdCollaboration._id}`
-      ),
+      cwd: path.resolve(process.env.PWD, `${createdCollaboration._id}`),
     },
     (error) => {
       if (error) {
@@ -103,10 +96,7 @@ const getAllFiles = async (folderPath) => {
 
 const getFiles = asyncHandler(async (req, res) => {
   const { playgroundId } = req.params;
-  const folderPath = path.resolve(
-    "/Users/darshan/Desktop/project/cloud-ide/playgrounds",
-    playgroundId
-  );
+  const folderPath = path.resolve(process.env.PWD, playgroundId);
 
   try {
     const filesTree = await getAllFiles(folderPath);

@@ -92,7 +92,7 @@ export default function VideoCall() {
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
-    ({ from, ans }: CallAcceptedPayload) => {
+    ({ ans }: CallAcceptedPayload) => {
       peerService.setLocalDescription(ans);
       console.log("Call Accepted!");
       sendStreams();
