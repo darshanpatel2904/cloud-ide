@@ -14,6 +14,7 @@ import { io, Socket } from "socket.io-client";
 import VideoCall from "@/components/VideoCall";
 import axiosInstance from "@/lib/Axios";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { useLoadingContext } from "@/contexts/LoadingContext";
 
 const Output = () => {
   return (
@@ -38,12 +39,14 @@ export default function ResponsiveWorkspace() {
   const playgroundId = location.pathname.split("/")[2];
   const { setPlayground, setSocket } = usePlaygroundContext();
   const { user } = useAuthContext();
+  const { setIsLoading } = useLoadingContext();
 
   useEffect(() => {
     if (!playgroundId || !user) return;
 
     const fetchPlaygroundData = async () => {
       try {
+        setIsLoading(true);
         const { data } = await axiosInstance.get(`/playground/${playgroundId}`);
         const socket: Socket = io("http://localhost:4001");
         setSocket(socket);
@@ -58,11 +61,13 @@ export default function ResponsiveWorkspace() {
         };
       } catch (error) {
         console.error("Error fetching playground data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchPlaygroundData();
-  }, [playgroundId, setPlayground, setSocket, user]);
+  }, [playgroundId, setIsLoading, setPlayground, setSocket, user]);
 
   return (
     <div className="h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">

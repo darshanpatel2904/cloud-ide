@@ -31,6 +31,7 @@ import axiosInstance from "@/lib/Axios";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
+import { useLoadingContext } from "@/contexts/LoadingContext";
 
 type Project = {
   _id: string;
@@ -45,14 +46,17 @@ export default function AllProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-
+  const { setIsLoading } = useLoadingContext();
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        setIsLoading(true);
         const { data } = await axiosInstance.get("/playground");
         setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProjects();

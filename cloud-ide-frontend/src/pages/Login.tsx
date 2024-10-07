@@ -14,17 +14,20 @@ import { Code2, Github } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "@/lib/Axios";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { useLoadingContext } from "@/contexts/LoadingContext";
 
 export default function Login() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const navigate = useNavigate();
   const { setUser } = useAuthContext();
+  const { setIsLoading } = useLoadingContext();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData(formRef.current as HTMLFormElement);
     const { email, password } = Object.fromEntries(data.entries());
     try {
+      setIsLoading(true);
       const { data } = await axiosInstance.post("/user/login", {
         email,
         password,
@@ -33,6 +36,8 @@ export default function Login() {
       navigate("/projects");
     } catch (error) {
       console.error("Error logging in:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

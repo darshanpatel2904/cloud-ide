@@ -13,15 +13,19 @@ import { Code2, Github } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import axiosInstance from "@/lib/Axios";
+import { useLoadingContext } from "@/contexts/LoadingContext";
 
 export default function Register() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const navigate = useNavigate();
+  const { setIsLoading } = useLoadingContext();
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const data = new FormData(formRef.current as HTMLFormElement);
     const { username, email, password } = Object.fromEntries(data.entries());
     try {
+      setIsLoading(true);
       await axiosInstance.post("/user/register", {
         username,
         email,
@@ -30,6 +34,8 @@ export default function Register() {
       navigate("/login");
     } catch (error) {
       console.error("Error registering user:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

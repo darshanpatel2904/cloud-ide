@@ -22,19 +22,21 @@ import { Code2, Plus, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "@/lib/Axios";
 import { Textarea } from "@/components/ui/textarea";
+import { useLoadingContext } from "@/contexts/LoadingContext";
 
 export default function ProjectEntry() {
   const navigate = useNavigate();
   const createFormRef = useRef<HTMLFormElement | null>(null);
   const joinFormRef = useRef<HTMLFormElement | null>(null);
+  const { setIsLoading } = useLoadingContext();
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const formData = new FormData(createFormRef.current as HTMLFormElement);
       const { projectName, projectType, description } = Object.fromEntries(
         formData.entries()
       );
-      console.log(projectName, projectType, description);
       const { data } = await axiosInstance.post(`/playground`, {
         projectName: projectName as string,
         projectType: projectType as string,
@@ -43,6 +45,8 @@ export default function ProjectEntry() {
       navigate(`/playground/${data._id}`);
     } catch (error) {
       console.error("Error creating project:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,14 +56,6 @@ export default function ProjectEntry() {
     const { projectId } = Object.fromEntries(formData.entries());
     navigate(`/playground/${projectId}`);
   };
-
-  // const handleJoinRoom = useCallback(
-  //   (data: { email: string; roomId: string }) => {
-  //     const { roomId } = data;
-  //     navigate(`/room/${roomId}`);
-  //   },
-  //   [navigate]
-  // );
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">

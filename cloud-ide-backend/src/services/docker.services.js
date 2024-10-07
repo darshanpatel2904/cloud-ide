@@ -4,7 +4,7 @@ import { processStreamOutput } from "../utils/processStreamOutput.js";
 class DockerService {
   constructor() {
     this.docker = new Dockerode({
-      socketPath: "/Users/darshan/.docker/run/docker.sock", // Replace with your actual Docker socket path
+      socketPath: "/Users/darshan/.docker/run/docker.sock",
     });
   }
 
@@ -20,7 +20,9 @@ class DockerService {
         "/home/cloud-ide/code": {},
       },
       HostConfig: {
-        Binds: [`${process.env.PWD}/${projectId}:/home/cloud-ide/code`],
+        Binds: [
+          `${process.env.PLAYGROUNDS_PATH}/${projectId}:/home/cloud-ide/code`,
+        ],
         PortBindings: {
           "5173/tcp": [{ HostPort: "0" }],
         },
@@ -47,7 +49,7 @@ class DockerService {
         AttachStdout: true,
         AttachStderr: true,
         Tty: true,
-        User: "coludIde",
+        User: "cloud-ide",
       },
       (err, exec) => {
         if (err) {
